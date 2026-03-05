@@ -269,8 +269,7 @@ def product_except_self(nums):
         result[i] = left
         left *= nums[i]
     
-    # Right products
-    right = 1
+    # Right products   right = 1
     for i in range(n - 1, -1, -1):
         result[i] *= right
         right *= nums[i]
