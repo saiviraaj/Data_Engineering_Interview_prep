@@ -1443,6 +1443,6 @@ A: Third-party cookies enabled cross-site tracking — if a user visited site A 
 
 **Q: How do you handle a data pipeline where the same user generates 10x more events than average?**
 A: This is a data skew problem. Strategies: (1) In BigQuery — partition by date, cluster by campaign; skewed users are spread across partitions by time. (2) In PySpark — salt the user_id join key: append random prefix to hot user IDs, explode the lookup table with all salt values, join on salted key. (3) Cap event count per user per session in the pipeline — user generates 1000 page views in 5 minutes? Flag as bot/crawler, exclude or sample. (4) Pre-aggregate before joining — reduce to user-session level before joining with large dimension tables.
-
+    
 **Q: What pipeline would you build to detect fraudulent ad clicks?**
 A: Multiple signals: (1) Click rate anomaly — CTR > 10% per placement is suspicious; (2) Short inter-click time — same IP/device clicking 5x in 60 seconds; (3) Conversion anomaly — clicks from a specific publisher never convert; (4) Bot-like user agents; (5) IP reputation lookup (known datacenter IPs). Implementation: streaming Dataflow pipeline reading click events, joining with impression events to compute CTR per publisher/placement in real time, writing anomalies to a fraud flag table. Batch: daily aggregation comparing publisher click patterns to conversion data — publishers with high clicks and zero conversions over 7 days get flagged.
