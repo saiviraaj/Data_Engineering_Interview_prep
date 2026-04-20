@@ -125,7 +125,7 @@ WHERE NOT EXISTS (
     WHERE cl.campaign_id = c.campaign_id
       AND cl.click_date = CURRENT_DATE()
 );
--- WARNING: NOT IN with NULLs is dangerous (see L5)
+-- WARNING: NOT IN with NULLs is dangerous (see L5
 ```
 
 ---
